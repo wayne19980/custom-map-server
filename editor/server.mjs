@@ -11,6 +11,7 @@ import path from 'node:path';
 import http from 'node:http';
 import crypto from 'node:crypto';
 import { validateStyleMin } from '@maplibre/maplibre-gl-style-spec';
+import { generateStylePatch } from './ai.mjs';
 
 const PORT = Number(process.env.PORT || 8090);
 const STYLES_DIR = path.resolve(process.env.STYLES_DIR || '/srv/styles');
@@ -160,7 +161,7 @@ async function handle(req, res) {
     );
   }
 
-  const match = pathname.match(/^\/api\/styles\/([a-z0-9_-]+)(?:\/(versions|restore|validate))?$/);
+  const match = pathname.match(/^\/api\/styles\/([a-z0-9_-]+)(?:\/(versions|restore|validate|ai))?$/);
   if (!match) return fail(res, 404, 'not found');
   const id = match[1];
   const action = match[2] || 'style';
@@ -176,6 +177,47 @@ async function handle(req, res) {
 
   if (action === 'versions' && req.method === 'GET') {
     return send(res, 200, { ok: true, versions: listVersions(id) });
+  }
+
+  if (action === 'ai' && req.method === 'POST') {
+    let payload;
+    try {
+      payload = JSON.parse(await readBody(req));
+    } catch (error) {
+      return fail(res, 400, 'invalid JSON', error.message);
+    }
+    if (!payload || typeof payload.prompt !== 'string' || !payload.prompt.trim()) {
+      return fail(res, 400, 'prompt is required');
+    }
+    let baseStyle;
+    try {
+      if (payload.style && typeof payload.style === 'object') {
+        baseStyle = payload.style;
+      } else {
+        baseStyle = JSON.parse(fs.readFileSync(stylePath(id), 'utf8'));
+      }
+    } catch (error) {
+      return fail(res, 400, 'style is not readable', error.message);
+    }
+    const baseIssues = validateStyle(baseStyle, id);
+    if (baseIssues.length) return send(res, 422, { ok: false, error: 'current style is invalid', issues: baseIssues });
+
+    try {
+      const result = await generateStylePatch(baseStyle, payload.prompt);
+      const issues = validateStyle(result.style, id);
+      if (issues.length) return send(res, 422, { ok: false, error: 'AI patch produced an invalid style', issues });
+      return send(res, 200, {
+        ok: true,
+        provider: result.provider,
+        explanation: result.explanation,
+        warning: result.warning,
+        patch: result.patch,
+        diff: result.diff,
+        style: result.style,
+      });
+    } catch (error) {
+      return fail(res, 422, error.message);
+    }
   }
 
   if (action === 'validate' && req.method === 'POST') {

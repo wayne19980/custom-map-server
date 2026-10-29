@@ -370,7 +370,7 @@
       },
       "source": "basemap",
       "source-layer": "aeroway",
-      "minzoom": 11,
+      "minzoom": 12,
       "filter": [
         "all",
         [
@@ -443,7 +443,7 @@
       },
       "source": "basemap",
       "source-layer": "aeroway",
-      "minzoom": 11,
+      "minzoom": 12,
       "filter": [
         "all",
         [
@@ -772,7 +772,7 @@
       },
       "source": "basemap",
       "source-layer": "transportation",
-      "minzoom": 11,
+      "minzoom": 10,
       "filter": [
         "all",
         [
@@ -1526,7 +1526,7 @@
           2
         ]
       },
-      "minzoom": 9
+      "minzoom": 13
     },
     {
       "id": "boundary_state",
@@ -2046,7 +2046,7 @@
         "text-halo-color": "#001426",
         "text-halo-width": 1
       },
-      "minzoom": 8
+      "minzoom": 12
     },
     {
       "id": "place_state",

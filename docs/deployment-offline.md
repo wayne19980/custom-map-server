@@ -40,6 +40,10 @@ EDITOR_TOKEN=<强随机令牌>
 # 编辑器容器写 styles/ 的用户；通常设成宿主目录的 uid/gid
 EDITOR_UID=1000
 EDITOR_GID=1000
+# 可选：AI 助手（不配置则用规则模式）
+AI_BASE_URL=
+AI_API_KEY=
+AI_MODEL=gpt-4o-mini
 ```
 
 - `PUBLIC_URL` 末尾必须有 `/`。

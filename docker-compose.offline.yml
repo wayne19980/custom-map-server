@@ -40,6 +40,9 @@ services:
     restart: unless-stopped
     environment:
       EDITOR_TOKEN: "${EDITOR_TOKEN:-change-me}"
+      AI_BASE_URL: "${AI_BASE_URL:-}"
+      AI_API_KEY: "${AI_API_KEY:-}"
+      AI_MODEL: "${AI_MODEL:-gpt-4o-mini}"
       STYLES_DIR: /srv/styles
       VERSIONS_DIR: /srv/versions
       MANIFEST_PATH: /srv/config/map.manifest.json

@@ -14,6 +14,7 @@
       <button id="save" class="primary" type="button">保存</button>
       <button id="versions" type="button">版本</button>
       <button id="toggle-json" type="button">JSON</button>
+      <button id="ai" type="button" class="ai-button">AI</button>
       <span id="zoom-level" class="zoom-level">z11.0</span>
       <a href="/" class="link">返回地图</a>
       <span id="status" class="status"></span>
@@ -53,6 +54,32 @@
           <button id="close-versions" type="button">关闭</button>
         </div>
         <div id="versions-list"></div>
+      </div>
+    </div>
+
+    <div id="ai-panel" class="modal" hidden>
+      <div class="modal-body ai-modal">
+        <div class="modal-head">
+          <strong>AI 样式助手</strong>
+          <button id="ai-close" type="button">关闭</button>
+        </div>
+        <div class="ai-content">
+          <p class="hint">用自然语言描述修改，AI 只输出受限制的 JSON Patch；先生成预览，确认后再保存。</p>
+          <textarea id="ai-prompt" placeholder="例如：把主干道改成青色，细一点；隐藏村庄名称"></textarea>
+          <div class="ai-actions">
+            <button id="ai-generate" type="button" class="primary">生成修改</button>
+            <span id="ai-status" class="muted"></span>
+          </div>
+          <div id="ai-result" hidden>
+            <div id="ai-explanation" class="ai-explanation"></div>
+            <div id="ai-warning" class="hint"></div>
+            <div id="ai-diff"></div>
+            <div class="ai-actions">
+              <button id="ai-apply" type="button" class="primary">应用到预览</button>
+              <button id="ai-discard" type="button">放弃</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

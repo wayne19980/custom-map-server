@@ -64,6 +64,18 @@ const els = {
   versionsList: document.getElementById('versions-list') as HTMLElement,
   closeVersions: document.getElementById('close-versions') as HTMLButtonElement,
   toast: document.getElementById('toast') as HTMLElement,
+  ai: document.getElementById('ai') as HTMLButtonElement,
+  aiPanel: document.getElementById('ai-panel') as HTMLElement,
+  aiClose: document.getElementById('ai-close') as HTMLButtonElement,
+  aiPrompt: document.getElementById('ai-prompt') as HTMLTextAreaElement,
+  aiGenerate: document.getElementById('ai-generate') as HTMLButtonElement,
+  aiStatus: document.getElementById('ai-status') as HTMLElement,
+  aiResult: document.getElementById('ai-result') as HTMLElement,
+  aiExplanation: document.getElementById('ai-explanation') as HTMLElement,
+  aiWarning: document.getElementById('ai-warning') as HTMLElement,
+  aiDiff: document.getElementById('ai-diff') as HTMLElement,
+  aiApply: document.getElementById('ai-apply') as HTMLButtonElement,
+  aiDiscard: document.getElementById('ai-discard') as HTMLButtonElement,
 };
 
 let manifest: Manifest;
@@ -73,6 +85,7 @@ let currentStyleId = '';
 let selectedLayerId: string | null = null;
 let map: maplibregl.Map | undefined;
 let dirty = false;
+let aiPreview: any | null = null;
 declare global {
   interface Window {
     __editorMap?: maplibregl.Map;
@@ -257,6 +270,7 @@ async function loadStyle(id: string, force = false): Promise<void> {
   selectedLayerId = null;
   selectedFeature = null;
   selectionLngLat = null;
+  aiPreview = null;
   dirty = false;
   setStatus('');
   renderStyleSelect();
@@ -671,6 +685,85 @@ async function restoreVersion(version: string): Promise<void> {
   }
 }
 
+function openAiPanel(): void {
+  els.aiPanel.hidden = false;
+  els.aiPrompt.focus();
+}
+
+function closeAiPanel(): void {
+  els.aiPanel.hidden = true;
+}
+
+function formatValue(value: unknown): string {
+  if (value === undefined) return '(空)';
+  const text = typeof value === 'string' ? value : JSON.stringify(value);
+  return text.length > 80 ? `${text.slice(0, 77)}…` : text;
+}
+
+function renderAiDiff(diff: any[]): void {
+  els.aiDiff.replaceChildren(
+    ...diff.map((row) => {
+      const item = document.createElement('div');
+      item.className = 'ai-diff-row';
+      const layer = document.createElement('span');
+      layer.className = 'layer';
+      layer.textContent = `${row.layerId} · ${row.property}`;
+      const value = document.createElement('code');
+      value.textContent = `${formatValue(row.before)} → ${formatValue(row.after)}`;
+      item.append(layer, value);
+      return item;
+    }),
+  );
+}
+
+async function generateAi(): Promise<void> {
+  if (!els.token.value.trim()) {
+    els.token.focus();
+    toast('请输入编辑令牌', true);
+    return;
+  }
+  const prompt = els.aiPrompt.value.trim();
+  if (!prompt) {
+    els.aiPrompt.focus();
+    toast('请输入修改描述', true);
+    return;
+  }
+  els.aiStatus.textContent = '生成中…';
+  els.aiResult.hidden = true;
+  try {
+    const result = await fetchJson<any>(`/api/styles/${currentStyleId}/ai`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...authHeaders() },
+      body: JSON.stringify({ prompt, style }),
+    });
+    aiPreview = result;
+    els.aiExplanation.textContent = result.explanation || '';
+    els.aiWarning.textContent = result.warning || '';
+    els.aiWarning.hidden = !result.warning;
+    renderAiDiff(result.diff || []);
+    els.aiResult.hidden = false;
+    els.aiStatus.textContent = result.provider === 'llm' ? 'AI 模型' : '规则模式';
+  } catch (error) {
+    els.aiStatus.textContent = '';
+    toast(error instanceof Error ? error.message : String(error), true);
+  }
+}
+
+function applyAiPreview(): void {
+  if (!aiPreview?.style) return;
+  style = aiPreview.style;
+  dirty = true;
+  setStatus('AI 预览未保存');
+  selectedFeature = null;
+  selectionLngLat = null;
+  map?.setStyle(absolutizeStyle(style) as any, { diff: false });
+  renderLayerTree();
+  renderInspector();
+  syncJson();
+  closeAiPanel();
+  toast('已应用到预览；确认后点「保存」');
+}
+
 async function bootstrap(): Promise<void> {
   try {
     const [manifestData, groups] = await Promise.all([
@@ -713,6 +806,11 @@ els.formatJson.addEventListener('click', () => {
   }
 });
 els.applyJson.addEventListener('click', applyJson);
+els.ai.addEventListener('click', openAiPanel);
+els.aiClose.addEventListener('click', closeAiPanel);
+els.aiGenerate.addEventListener('click', () => void generateAi());
+els.aiApply.addEventListener('click', applyAiPreview);
+els.aiDiscard.addEventListener('click', () => { aiPreview = null; els.aiResult.hidden = true; closeAiPanel(); });
 
 window.addEventListener('beforeunload', (event) => {
   if (!dirty) return;

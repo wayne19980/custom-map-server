@@ -23,6 +23,7 @@
 | glyphore | MIT / Apache-2.0 | <https://github.com/Kartore/glyphore> |
 | spreet | MIT | <https://github.com/flother/spreet> |
 | Maputnik（可选） | MIT | <https://github.com/maplibre/maputnik> |
+| fast-json-patch | MIT | <https://github.com/Starcounter-Jack/JSON-Patch> |
 | Docker 镜像基础 | 各自许可 | nginx / node / alpine 等 |
 
 ## 样式

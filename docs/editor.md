@@ -67,6 +67,7 @@ EDITOR_TOKEN=change-me
 | PUT | `/api/styles/<id>` | 保存样式（校验后写入） |
 | POST | `/api/styles/<id>/validate` | 只校验，不写入 |
 | POST | `/api/styles/<id>/restore` | 恢复 `{ "version": "..." }` |
+| POST | `/api/styles/<id>/ai` | AI 样式修改：`{ "prompt": "...", "style": {...} }` |
 
 示例：
 
@@ -99,9 +100,37 @@ curl -X PUT \
 - `data/style-versions` 对 editor 读写；
 - 主地图和编辑器读同一份静态样式，保存后刷新即生效。
 
-## 7. 当前限制
+## 7. AI 助手
 
-- 没有 AI（P2 计划）：下一步是“自然语言 → JSON Patch → 校验 → diff → 确认”；
+![AI 助手](screenshots/editor-ai.png)
+
+顶部「AI」按钮：
+
+1. 输入自然语言，例如“把主干道改成青色”“隐藏村庄名称”；
+2. 服务端返回受限制的 **RFC 6902 JSON Patch** + 说明 + diff；
+3. 前端只把 patch 应用到副本，MapLibre 预览；
+4. 确认后点「应用到预览」，再点顶部「保存」。
+
+安全约束：
+
+- 只允许修改 `/layers/<index>/(paint|layout|minzoom|maxzoom|filter)`；
+- 不允许改 `sources` / `glyphs` / `sprite` / `metadata`；
+- 服务端再次用 Style Spec 校验；
+- AI 不执行代码。
+
+配置（`.env`）：
+
+```ini
+AI_BASE_URL=https://api.openai.com/v1   # OpenAI 兼容端点
+AI_API_KEY=sk-...
+AI_MODEL=gpt-4o-mini
+```
+
+不配置 `AI_API_KEY` 时使用本地规则模式，支持常见颜色/隐藏/显示/线宽请求；复杂需求需要接模型。
+
+## 8. 当前限制
+
+- AI 已支持 JSON Patch + 校验 + diff + 预览；LLM 需要配置 `AI_API_KEY`，未配置时是规则模式；
 - 没有多用户/协作/审批流；
 - 没有图层新增/删除的可视化操作（可用 JSON 面板做）；
 - 复杂表达式仍建议用 JSON 编辑；

@@ -64,6 +64,7 @@ COASTLINE=osm
 - `ALLOWED_HOSTS`：TileServer GL 的 Host 白名单；生产建议填域名，逗号分隔。`*` 表示不限制。
 - `EDITOR_TOKEN`：样式编辑器令牌；默认 `change-me`，生产必须改。不需要编辑器时可在 Nginx 关闭 `/editor` 与 `/api/`。
 - `EDITOR_UID` / `EDITOR_GID`：编辑器容器写 `styles/` 的用户，默认 1000；需与宿主目录权限匹配。
+- `AI_BASE_URL` / `AI_API_KEY` / `AI_MODEL`：可选的 OpenAI 兼容端点；不配置时 AI 面板使用本地规则模式。
 
 ## 4. 启动与停止
 

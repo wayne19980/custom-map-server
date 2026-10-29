@@ -90,12 +90,13 @@ z16 细节（建筑/街道/中文标注）：
 - 右侧改颜色、线宽、透明度、可见性、minzoom/maxzoom；
 - 点击地图要素可直接选中它所属的样式类型，并查看 class/name 等属性；
 - 滚轮固定 ±1 级，顶部实时显示当前层级（如 `z11.0`）；
+- 「AI」按钮：自然语言改样式，返回 JSON Patch + diff，预览确认后保存；
 - 顶部保存、版本历史、完整 JSON 编辑；
 - 保存写入 `styles/<id>.json`，主地图刷新即可看到，不需要重启 tileserver。
 
 ![编辑器](docs/screenshots/editor.png)
 
-编辑令牌在 `.env` 的 `EDITOR_TOKEN`（默认 `change-me`，生产必须改）。版本自动备份到 `data/style-versions/<id>/`。
+编辑令牌在 `.env` 的 `EDITOR_TOKEN`（默认 `change-me`，生产必须改）。AI 助手需要可选配置 `AI_BASE_URL` / `AI_API_KEY` / `AI_MODEL`，未配置时使用本地规则模式。版本自动备份到 `data/style-versions/<id>/`。
 
 详见 [编辑器说明](docs/editor.md)。
 
