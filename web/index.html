@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>自定义地图</title>
+  </head>
+  <body>
+    <div id="map" aria-label="地图"></div>
+
+    <header id="brand" class="panel">
+      <div id="brand-title">自定义地图</div>
+      <div id="brand-subtitle"></div>
+      <a id="editor-link" href="/editor">编辑样式 →</a>
+    </header>
+
+    <nav id="style-switcher" class="panel" aria-label="地图样式"></nav>
+
+    <div id="zoom-level" class="zoom-level">z11.0</div>
+
+    <footer id="footer">
+      <a id="osm-link" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">
+        © OpenStreetMap contributors
+      </a>
+    </footer>
+
+    <div id="loading" class="overlay" role="status" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+      <span id="loading-text">加载地图…</span>
+    </div>
+
+    <div id="toast" class="toast" role="alert" hidden></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

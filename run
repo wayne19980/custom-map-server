@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+# Portable task runner for environments without GNU make.
+# Usage: ./run <command> [args]
+set -euo pipefail
+
+cd "$(dirname "$0")"
+export DOCKER_CONFIG="${DOCKER_CONFIG:-$PWD/.docker}"
+export REGION="${REGION:-shanghai}"
+export COASTLINE="${COASTLINE:-osm}"
+mkdir -p "$DOCKER_CONFIG"
+
+cmd="${1:-help}"
+if [[ $# -gt 0 ]]; then shift; fi
+
+case "$cmd" in
+  help)
+    cat <<'EOF'
+Custom Map Server
+
+  ./run fetch [region]   下载 data/osm/<region>-latest.osm.pbf
+  ./run coastline        下载并解压 OSM water polygons（约 900MB，只需一次）
+  ./run tiles            生成 data/tiles/<region>.pmtiles
+  ./run fonts            生成中文/拉丁 glyph PBF
+  ./run sprites          生成三套样式图标雪碧图
+  ./run styles           由 vendor 样式 + manifest 生成 styles/*.json
+  ./run config           生成 config/tileserver.config.json
+  ./run check            静态校验样式/数据/字体/图标契约
+  ./run zoom-matrix      生成 docs/zoom-matrix.md（图层/层级矩阵）
+  ./run up               构建并启动 TileServer GL + Nginx
+  ./run verify           对运行中的服务做 HTTP 验收
+  ./run bundle           打离线部署包 dist/
+  ./run down             停止服务
+  ./run logs             查看日志
+  ./run clean            删除构建产物（保留 data/osm 与 data/cache）
+  ./run bootstrap        coastline + tiles + fonts + sprites + styles + config + check
+
+没有 GNU make 时用本脚本；有 make 时 `make <command>` 等价。
+EOF
+    ;;
+  fetch)
+    ./scripts/fetch-pbf.sh "${1:-$REGION}"
+    ;;
+  coastline)
+    ./scripts/fetch-coastline.sh
+    ;;
+  tiles)
+    REGION="$REGION" COASTLINE="$COASTLINE" ./scripts/build-tiles.sh
+    ;;
+  fonts)
+    ./scripts/build-fonts.sh
+    ;;
+  sprites)
+    ./scripts/build-sprites.sh
+    ;;
+  styles)
+    node scripts/build-styles.mjs
+    ;;
+  config)
+    node scripts/gen-config.mjs
+    ;;
+  check)
+    node scripts/check.mjs
+    ;;
+  zoom-matrix)
+    node scripts/gen-zoom-matrix.mjs "${1:-blueprint}"
+    ;;
+  up)
+    docker compose up -d --build
+    ;;
+  down)
+    docker compose down
+    ;;
+  logs)
+    docker compose logs -f --tail=100
+    ;;
+  verify)
+    BASE_URL="http://localhost:${WEB_PORT:-8081}" ./scripts/verify.sh
+    ;;
+  bundle)
+    ./scripts/bundle.sh
+    ;;
+  clean)
+    rm -rf data/tiles/* data/fonts/* data/sprites/* data/tmp/* styles/*.json config/tileserver.config.json dist web/dist
+    ;;
+  bootstrap)
+    if [[ ! -f "data/osm/${REGION}-latest.osm.pbf" ]]; then
+      ./scripts/fetch-pbf.sh "$REGION"
+    fi
+    if [[ "$COASTLINE" != "none" ]]; then
+      ./scripts/fetch-coastline.sh
+    fi
+    REGION="$REGION" COASTLINE="$COASTLINE" ./scripts/build-tiles.sh
+    ./scripts/build-fonts.sh
+    ./scripts/build-sprites.sh
+    node scripts/build-styles.mjs
+    node scripts/gen-config.mjs
+    node scripts/check.mjs
+    ;;
+  *)
+    echo "run: unknown command: $cmd" >&2
+    echo "run: try ./run help" >&2
+    exit 1
+    ;;
+esac

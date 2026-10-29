@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>样式编辑器</title>
+  </head>
+  <body>
+    <header id="topbar">
+      <div class="brand">样式编辑器</div>
+      <select id="style-select" aria-label="选择样式"></select>
+      <input id="token" type="password" placeholder="编辑令牌" autocomplete="off" aria-label="编辑令牌" />
+      <button id="save" class="primary" type="button">保存</button>
+      <button id="versions" type="button">版本</button>
+      <button id="toggle-json" type="button">JSON</button>
+      <span id="zoom-level" class="zoom-level">z11.0</span>
+      <a href="/" class="link">返回地图</a>
+      <span id="status" class="status"></span>
+    </header>
+
+    <main id="workspace">
+      <aside id="layers" class="pane">
+        <div class="pane-title">图层 <span id="layer-count" class="muted"></span></div>
+        <div id="layer-tree"></div>
+      </aside>
+
+      <section id="preview">
+        <div id="map"></div>
+      </section>
+
+      <aside id="inspector" class="pane">
+        <div class="pane-title">属性</div>
+        <div id="inspector-body"><p class="muted">选择一个图层</p></div>
+      </aside>
+    </main>
+
+    <section id="drawer" class="drawer" aria-label="样式 JSON">
+      <div class="drawer-head">
+        <strong>Style JSON</strong>
+        <button id="format-json" type="button">格式化</button>
+        <button id="apply-json" type="button" class="primary">应用 JSON</button>
+        <button id="close-drawer" type="button">收起</button>
+      </div>
+      <textarea id="json" spellcheck="false"></textarea>
+      <div id="json-error" class="error"></div>
+    </section>
+
+    <div id="versions-panel" class="modal" hidden>
+      <div class="modal-body">
+        <div class="modal-head">
+          <strong>版本历史</strong>
+          <button id="close-versions" type="button">关闭</button>
+        </div>
+        <div id="versions-list"></div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <script type="module" src="/src/editor/main.ts"></script>
+  </body>
+</html>

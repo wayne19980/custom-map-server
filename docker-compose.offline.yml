@@ -1,0 +1,87 @@
+# Offline deployment compose file.
+# Images are loaded from images.tar by install.sh; nothing is built or pulled.
+services:
+  tileserver:
+    image: maptiler/tileserver-gl:v5.7.0
+    restart: unless-stopped
+    command:
+      - "--config"
+      - "/srv/map/config.json"
+      - "--port"
+      - "8080"
+      - "--public_url"
+      - "${PUBLIC_URL:-http://localhost:8081/}"
+    environment:
+      TILESERVER_GL_ALLOWED_HOSTS: "${ALLOWED_HOSTS:-*}"
+    volumes:
+      - ./data/tiles:/srv/map/tiles:ro
+      - ./data/fonts:/srv/map/fonts:ro
+      - ./data/sprites:/srv/map/sprites:ro
+      - ./styles:/srv/map/styles:ro
+      - ./config/tileserver.config.json:/srv/map/config.json:ro
+    expose:
+      - "8080"
+    healthcheck:
+      test:
+        - "CMD"
+        - "node"
+        - "-e"
+        - "fetch('http://127.0.0.1:8080/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 5s
+    networks:
+      - mapnet
+
+  editor:
+    image: custom-map-editor-api:latest
+    user: "${EDITOR_UID:-1000}:${EDITOR_GID:-1000}"
+    restart: unless-stopped
+    environment:
+      EDITOR_TOKEN: "${EDITOR_TOKEN:-change-me}"
+      STYLES_DIR: /srv/styles
+      VERSIONS_DIR: /srv/versions
+      MANIFEST_PATH: /srv/config/map.manifest.json
+      PORT: "8090"
+    volumes:
+      - ./styles:/srv/styles
+      - ./data/style-versions:/srv/versions
+      - ./config:/srv/config:ro
+    expose:
+      - "8090"
+    healthcheck:
+      test:
+        - "CMD"
+        - "node"
+        - "-e"
+        - "fetch('http://127.0.0.1:8090/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mapnet
+
+  web:
+    image: custom-map-server-web:latest
+    restart: unless-stopped
+    depends_on:
+      tileserver:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-8081}:80"
+    volumes:
+      - ./data:/data:ro
+      - ./styles:/srv/styles:ro
+      - ./config/map.manifest.json:/usr/share/nginx/html/map.manifest.json:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mapnet
+
+networks:
+  mapnet:
+    driver: bridge

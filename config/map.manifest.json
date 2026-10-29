@@ -1,0 +1,58 @@
+{
+  "branding": {
+    "title": "上海自定义地图",
+    "subtitle": "Custom Map Server · 离线矢量瓦片",
+    "attribution": "© OpenStreetMap contributors",
+    "attributionUrl": "https://www.openstreetmap.org/copyright",
+    "logo": ""
+  },
+  "datasets": {
+    "shanghai": {
+      "label": "上海",
+      "pmtiles": "shanghai.pmtiles",
+      "version": "20261029",
+      "center": [
+        121.4737,
+        31.2304
+      ],
+      "zoom": 11,
+      "bounds": [
+        120.8,
+        30.6,
+        122.2,
+        31.9
+      ],
+      "minzoom": 0,
+      "maxzoom": 14,
+      "attribution": "© OpenStreetMap contributors"
+    }
+  },
+  "styles": [
+    {
+      "id": "light",
+      "label": "浅色",
+      "base": "vendor/positron/style.json",
+      "dataset": "shanghai"
+    },
+    {
+      "id": "dark",
+      "label": "深色",
+      "base": "vendor/dark-matter/style.json",
+      "dataset": "shanghai"
+    },
+    {
+      "id": "bright",
+      "label": "彩色",
+      "base": "vendor/osm-bright/style.json",
+      "dataset": "shanghai"
+    },
+    {
+      "id": "blueprint",
+      "label": "深蓝",
+      "base": "vendor/dark-matter/style.json",
+      "dataset": "shanghai",
+      "palette": "palettes/blueprint.json"
+    }
+  ],
+  "defaultStyle": "light"
+}

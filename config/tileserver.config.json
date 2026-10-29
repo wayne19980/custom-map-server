@@ -1,0 +1,40 @@
+{
+  "options": {
+    "paths": {
+      "root": "/srv/map",
+      "fonts": "fonts",
+      "sprites": "sprites",
+      "styles": "styles",
+      "pmtiles": "tiles",
+      "mbtiles": "tiles"
+    },
+    "serveAllFonts": true,
+    "serveAllStyles": false,
+    "serveStaticMaps": false,
+    "staticAttributionText": "© OpenStreetMap contributors",
+    "allowedHosts": "*"
+  },
+  "styles": {
+    "light": {
+      "style": "light.json",
+      "serve_rendered": false
+    },
+    "dark": {
+      "style": "dark.json",
+      "serve_rendered": false
+    },
+    "bright": {
+      "style": "bright.json",
+      "serve_rendered": false
+    },
+    "blueprint": {
+      "style": "blueprint.json",
+      "serve_rendered": false
+    }
+  },
+  "data": {
+    "shanghai": {
+      "pmtiles": "shanghai.pmtiles"
+    }
+  }
+}

@@ -1,0 +1,570 @@
+{
+  "name": "Blueprint",
+  "description": "深蓝底图：深海军蓝背景、青蓝道路、深青绿地表，低饱和战术风。",
+  "layers": {
+    "background": {
+      "paint": {
+        "background-color": "#001426"
+      }
+    },
+    "water": {
+      "paint": {
+        "fill-color": "#002447"
+      }
+    },
+    "landcover_ice_shelf": {
+      "paint": {
+        "fill-color": "#0d3945",
+        "fill-opacity": 0.35
+      }
+    },
+    "landcover_glacier": {
+      "paint": {
+        "fill-color": "#0d3945",
+        "fill-opacity": 0.35
+      }
+    },
+    "landuse_residential": {
+      "paint": {
+        "fill-color": "#0d3945",
+        "fill-opacity": 0.22
+      }
+    },
+    "landcover_wood": {
+      "paint": {
+        "fill-color": "#0d3945",
+        "fill-opacity": 0.55
+      },
+      "removePaint": [
+        "fill-pattern"
+      ]
+    },
+    "landuse_park": {
+      "paint": {
+        "fill-color": "#0d3945",
+        "fill-opacity": 0.8
+      }
+    },
+    "waterway": {
+      "paint": {
+        "line-color": "#0061a3"
+      }
+    },
+    "water_name": {
+      "paint": {
+        "text-color": "#4f9fc8",
+        "text-halo-color": "#001426"
+      },
+      "minzoom": 13,
+      "maxzoom": 20
+    },
+    "building": {
+      "paint": {
+        "fill-color": "#0d3945",
+        "fill-opacity": 0.3,
+        "fill-outline-color": "#002447"
+      },
+      "minzoom": 13
+    },
+    "aeroway-taxiway": {
+      "paint": {
+        "line-color": "#145789"
+      }
+    },
+    "aeroway-runway-casing": {
+      "paint": {
+        "line-color": "#001426"
+      }
+    },
+    "aeroway-area": {
+      "paint": {
+        "fill-color": "#0d3945"
+      }
+    },
+    "aeroway-runway": {
+      "paint": {
+        "line-color": "#0061a3"
+      }
+    },
+    "road_area_pier": {
+      "paint": {
+        "fill-color": "#0d3945"
+      },
+      "minzoom": 14
+    },
+    "road_pier": {
+      "paint": {
+        "line-color": "#145789",
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              13,
+              0.6
+            ],
+            [
+              17,
+              2
+            ]
+          ]
+        }
+      },
+      "minzoom": 14
+    },
+    "highway_path": {
+      "paint": {
+        "line-color": "#145789",
+        "line-opacity": 0.4,
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              14,
+              0.4
+            ],
+            [
+              18,
+              1.0
+            ]
+          ]
+        }
+      },
+      "minzoom": 14
+    },
+    "highway_minor": {
+      "paint": {
+        "line-color": "#145789",
+        "line-opacity": 0.65,
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              13,
+              0.6
+            ],
+            [
+              16,
+              1.0
+            ],
+            [
+              20,
+              5
+            ]
+          ]
+        }
+      },
+      "minzoom": 13
+    },
+    "highway_major_casing": {
+      "paint": {
+        "line-color": "#001426",
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              11,
+              1.6
+            ],
+            [
+              14,
+              2.2
+            ],
+            [
+              20,
+              9
+            ]
+          ]
+        }
+      },
+      "minzoom": 11,
+      "filter": [
+        "all",
+        [
+          "==",
+          "$type",
+          "LineString"
+        ],
+        [
+          "in",
+          "class",
+          "primary",
+          "trunk"
+        ]
+      ]
+    },
+    "highway_major_inner": {
+      "paint": {
+        "line-color": "#0061a3",
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              11,
+              0.9
+            ],
+            [
+              14,
+              1.4
+            ],
+            [
+              18,
+              3
+            ],
+            [
+              20,
+              7
+            ]
+          ]
+        }
+      },
+      "minzoom": 11,
+      "filter": [
+        "all",
+        [
+          "==",
+          "$type",
+          "LineString"
+        ],
+        [
+          "in",
+          "class",
+          "primary",
+          "trunk"
+        ]
+      ]
+    },
+    "highway_major_subtle": {
+      "paint": {
+        "line-color": "#145789",
+        "line-width": {
+          "stops": [
+            [
+              6,
+              0
+            ],
+            [
+              8,
+              0.8
+            ],
+            [
+              11,
+              1.4
+            ]
+          ]
+        }
+      },
+      "maxzoom": 10,
+      "filter": [
+        "all",
+        [
+          "==",
+          "$type",
+          "LineString"
+        ],
+        [
+          "in",
+          "class",
+          "primary",
+          "trunk"
+        ]
+      ]
+    },
+    "highway_motorway_casing": {
+      "paint": {
+        "line-color": "#001426",
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              6,
+              1.6
+            ],
+            [
+              10,
+              2.0
+            ],
+            [
+              14,
+              2.6
+            ],
+            [
+              20,
+              9
+            ]
+          ]
+        }
+      },
+      "minzoom": 6
+    },
+    "highway_motorway_inner": {
+      "paint": {
+        "line-color": "#0061a3",
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              6,
+              0.9
+            ],
+            [
+              10,
+              1.2
+            ],
+            [
+              14,
+              1.8
+            ],
+            [
+              18,
+              3.5
+            ],
+            [
+              20,
+              6
+            ]
+          ]
+        }
+      },
+      "minzoom": 6
+    },
+    "highway_motorway_subtle": {
+      "paint": {
+        "line-color": "#145789",
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              4,
+              1.2
+            ],
+            [
+              6,
+              0.8
+            ]
+          ]
+        }
+      }
+    },
+    "road_oneway": {
+      "paint": {
+        "icon-opacity": 0.35
+      }
+    },
+    "road_oneway_opposite": {
+      "paint": {
+        "icon-opacity": 0.35
+      }
+    },
+    "railway_transit": {
+      "paint": {
+        "line-color": "#145789"
+      }
+    },
+    "railway_transit_dashline": {
+      "paint": {
+        "line-color": "#145789"
+      }
+    },
+    "railway_minor": {
+      "paint": {
+        "line-color": "#145789"
+      }
+    },
+    "railway_minor_dashline": {
+      "paint": {
+        "line-color": "#145789"
+      }
+    },
+    "railway": {
+      "paint": {
+        "line-color": "#145789",
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              13,
+              0.5
+            ],
+            [
+              16,
+              1.0
+            ],
+            [
+              20,
+              2.5
+            ]
+          ]
+        }
+      }
+    },
+    "railway_dashline": {
+      "paint": {
+        "line-color": "#145789",
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              13,
+              0.4
+            ],
+            [
+              16,
+              0.8
+            ],
+            [
+              20,
+              2.0
+            ]
+          ]
+        }
+      }
+    },
+    "highway_name_other": {
+      "paint": {
+        "text-color": "#4f9fc8",
+        "text-halo-color": "#001426"
+      },
+      "minzoom": 13
+    },
+    "highway_name_motorway": {
+      "paint": {
+        "text-color": "#6ab8dd"
+      },
+      "minzoom": 9
+    },
+    "boundary_state": {
+      "paint": {
+        "line-color": "#145789"
+      }
+    },
+    "boundary_country_z0-4": {
+      "paint": {
+        "line-color": "#145789"
+      }
+    },
+    "boundary_country_z5-": {
+      "paint": {
+        "line-color": "#145789"
+      }
+    },
+    "place_other": {
+      "paint": {
+        "text-color": "#4f9fc8",
+        "text-halo-color": "#001426"
+      },
+      "minzoom": 14,
+      "maxzoom": 20
+    },
+    "place_suburb": {
+      "paint": {
+        "text-color": "#4f9fc8",
+        "text-halo-color": "#001426"
+      },
+      "minzoom": 14,
+      "maxzoom": 20
+    },
+    "place_village": {
+      "paint": {
+        "text-color": "#4f9fc8",
+        "text-halo-color": "#001426"
+      },
+      "minzoom": 14,
+      "maxzoom": 20
+    },
+    "place_town": {
+      "paint": {
+        "text-color": "#6ab8dd",
+        "text-halo-color": "#001426"
+      },
+      "minzoom": 11,
+      "maxzoom": 20
+    },
+    "place_city": {
+      "paint": {
+        "text-color": "#6ab8dd",
+        "text-halo-color": "#001426"
+      },
+      "minzoom": 13,
+      "maxzoom": 20
+    },
+    "place_city_large": {
+      "paint": {
+        "text-color": "#6ab8dd",
+        "text-halo-color": "#001426"
+      },
+      "minzoom": 8,
+      "maxzoom": 20
+    },
+    "place_state": {
+      "paint": {
+        "text-color": "#6ab8dd",
+        "text-halo-color": "#001426"
+      },
+      "minzoom": 8
+    },
+    "place_country_other": {
+      "paint": {
+        "text-color": "#6ab8dd",
+        "text-halo-color": "#001426"
+      }
+    },
+    "place_country_minor": {
+      "paint": {
+        "text-color": "#6ab8dd",
+        "text-halo-color": "#001426"
+      }
+    },
+    "place_country_major": {
+      "paint": {
+        "text-color": "#6ab8dd",
+        "text-halo-color": "#001426"
+      }
+    }
+  },
+  "extraLayers": [
+    {
+      "id": "highway_secondary_casing",
+      "clone": "highway_major_casing",
+      "minzoom": 13,
+      "filter": [
+        "all",
+        [
+          "==",
+          "$type",
+          "LineString"
+        ],
+        [
+          "in",
+          "class",
+          "secondary",
+          "tertiary"
+        ]
+      ],
+      "paint": {
+        "line-color": "#001426"
+      }
+    },
+    {
+      "id": "highway_secondary_inner",
+      "clone": "highway_major_inner",
+      "minzoom": 13,
+      "filter": [
+        "all",
+        [
+          "==",
+          "$type",
+          "LineString"
+        ],
+        [
+          "in",
+          "class",
+          "secondary",
+          "tertiary"
+        ]
+      ],
+      "paint": {
+        "line-color": "#0061a3"
+      }
+    }
+  ]
+}

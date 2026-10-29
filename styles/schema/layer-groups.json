@@ -1,0 +1,13 @@
+{
+  "groups": [
+    { "id": "background", "label": "背景", "order": 0 },
+    { "id": "water", "label": "水系", "order": 10 },
+    { "id": "land", "label": "地表", "order": 20 },
+    { "id": "building", "label": "建筑", "order": 30 },
+    { "id": "transport", "label": "交通", "order": 40 },
+    { "id": "boundary", "label": "边界", "order": 50 },
+    { "id": "place", "label": "地名", "order": 60 },
+    { "id": "poi", "label": "POI", "order": 70 },
+    { "id": "other", "label": "其他", "order": 90 }
+  ]
+}

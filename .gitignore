@@ -1,0 +1,28 @@
+# Build inputs / generated data
+data/osm/
+data/tiles/
+data/fonts/
+data/fonts-src/
+data/sprites/
+data/cache/
+data/tmp/
+data/*.log
+
+# Node / build outputs
+.cache/
+node_modules/
+web/node_modules/
+web/dist/
+dist/
+
+# Local env
+.env
+*.local
+*.log
+.DS_Store
+
+# Local tooling
+.docker/
+.chrome-profile/
+
+data/style-versions/
