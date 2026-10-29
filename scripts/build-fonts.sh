@@ -20,7 +20,7 @@ if [[ ! -f "$BOLD" ]]; then
   curl -L --fail --retry 3 --progress-bar -o "$BOLD" "$BASE_URL/NotoSansCJKsc-Bold.otf"
 fi
 
-if [[ -f "$OUT_DIR/fonts.json" && -d "$OUT_DIR/Noto Sans CJK SC Regular" && "${FORCE:-0}" != "1" ]]; then
+if [[ -f "$OUT_DIR/fonts.json" && -d "$OUT_DIR/NotoSansSC-Regular" && "${FORCE:-0}" != "1" ]]; then
   echo "build-fonts: glyphs already generated (FORCE=1 to rebuild)"
 else
   rm -rf "$OUT_DIR"
@@ -28,6 +28,16 @@ else
   echo "build-fonts: generating glyph ranges (this can take a minute)"
   npm_config_cache="$PWD/.cache/npm" \
     npx --yes @kartore/glyphore@0.2.0 build "$FONT_DIR" -o "$OUT_DIR"
+fi
+
+# Stable no-space fontstack names: TileServer GL's native raster renderer
+# receives these names over a fonts:// request, and spaces complicate that
+# path. (Browser glyph URLs handle either form.)
+if [[ -d "$OUT_DIR/Noto Sans CJK SC Regular" && ! -d "$OUT_DIR/NotoSansSC-Regular" ]]; then
+  mv "$OUT_DIR/Noto Sans CJK SC Regular" "$OUT_DIR/NotoSansSC-Regular"
+fi
+if [[ -d "$OUT_DIR/Noto Sans CJK SC Bold" && ! -d "$OUT_DIR/NotoSansSC-Bold" ]]; then
+  mv "$OUT_DIR/Noto Sans CJK SC Bold" "$OUT_DIR/NotoSansSC-Bold"
 fi
 
 node - <<'NODE'

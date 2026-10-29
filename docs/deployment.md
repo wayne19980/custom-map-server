@@ -143,7 +143,7 @@ Compose 服务：
 | `make up` 报 `~/.docker/buildx` 只读 | 确认 `DOCKER_CONFIG` 指向可写目录（Makefile 默认 `./.docker`） |
 | 页面空白、控制台 404 | 打开 `/map.manifest.json`、`/styles/light/style.json` 是否 200；确认 `make config` 已执行 |
 | 瓦片 404 | 确认 `data/tiles/shanghai.pmtiles` 存在；`docker compose exec tileserver ls /srv/map/tiles` |
-| 字体 404 | `curl /fonts/Noto%20Sans%20CJK%20SC%20Regular/0-255.pbf`；确认 `make fonts` 且字体名与样式一致 |
+| 字体 404 | `curl /fonts/NotoSansSC-Regular/0-255.pbf`；确认 `make fonts` 且字体名与样式一致 |
 | 图标 404 | 样式里的 `sprite` 应为 `<styleId>/sprite`（相对 `paths.sprites`），不要写 `/sprites/...` |
 | 中文不显示 | 确认样式 `text-font` 为 Noto Sans CJK SC；`data/fonts` 已生成；源数据有 `name` 标签 |
 | 海面缺失 | 用了 `COASTLINE=none`；或 `data/cache/coastline/water_polygons.shp` 不存在 |

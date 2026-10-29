@@ -142,7 +142,7 @@ BFF /api/ai/style-patch
 | P0 | 内容/样式规范 + zoom matrix 校验 | ✅ 已完成基础版 |
 | P1 | 可视化编辑器（图形 + JSON + 预览 + 保存 + 版本） | ✅ MVP 已完成 |
 | P2 | AI 助手（JSON Patch + 校验 + diff） | ✅ MVP 已完成（规则 fallback + LLM 接口） |
-| P3 | 标准服务（栅格/WMTS/TileJSON + 文档） | 3–5 天 |
+| P3 | 标准服务（栅格/WMTS/TileJSON + 文档） | ✅ 基础版已完成（blueprint raster/WMTS） |
 | P4 | POI 搜索/高亮 + 离线下载/加载 | 1–2 周 |
 | P5 | Cesium/百度/高德适配 + 坐标转换 | 1–3 周/引擎 |
 

@@ -11,6 +11,7 @@
   data/fonts-src/*.otf ──glyphore──> data/fonts/<fontstack>/<range>.pbf
   styles/vendor/*.json + icons ──spreet──> data/sprites/<style>/sprite*
   styles/vendor/*.json + config/map.manifest.json ──build-styles──> styles/<id>.json
+                                                              └── render:true ──> styles/<id>-raster.json
   config/map.manifest.json ──gen-config──> config/tileserver.config.json
 
 运行期（客户服务器，可断网）
@@ -67,6 +68,8 @@
 | `GET /map.manifest.json` | 样式/数据集/品牌清单 |
 | `GET /styles/<id>/style.json` | 静态样式（Nginx 从 `styles/<id>.json` 提供） |
 | `GET /styles/schema/layer-groups.json` | 图层分组 schema |
+| `GET /styles/<id>_raster/{z}/{x}/{y}.png` | 服务端栅格（需 `render: true`） |
+| `GET /styles/<id>_raster/wmts.xml` | WMTS capabilities |
 | `GET /editor` | 可视化样式编辑器 |
 | `GET/PUT /api/styles/...` | 编辑器 API（鉴权、校验、版本） |
 | `GET /sprites/<id>/sprite[@2x].{json,png}` | Nginx 从 `data/sprites/<id>/` 读取 |

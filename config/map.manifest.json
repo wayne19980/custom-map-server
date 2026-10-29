@@ -51,7 +51,8 @@
       "label": "深蓝",
       "base": "vendor/dark-matter/style.json",
       "dataset": "shanghai",
-      "palette": "palettes/blueprint.json"
+      "palette": "palettes/blueprint.json",
+      "render": true
     }
   ],
   "defaultStyle": "light"

@@ -127,9 +127,9 @@ styles/<styleId>.json
 
 - 样式里的 `text-font` 必须是 `data/fonts/` 中真实存在的字体名。
 - 本项目的字体名由 `make fonts` 检测并写入 `data/fonts/fonts.json`，例如：
-  - `Noto Sans CJK SC Regular`
-  - `Noto Sans CJK SC Bold`
-- 不要写 `["Noto Sans Regular", "Noto Sans CJK SC Regular"]` 这样的多字体栈：MapLibre 会请求 `Noto Sans Regular,Noto Sans CJK SC Regular` 目录，而 glyphore 不生成组合目录。统一用单字体即可（Noto CJK 同时含拉丁）。
+  - `NotoSansSC-Regular`
+  - `NotoSansSC-Bold`
+- 不要写多字体栈（多个字体名用逗号拼接）：MapLibre 会请求组合目录，而 glyphore 不生成组合目录。统一用单字体 `NotoSansSC-Regular` / `NotoSansSC-Bold` 即可（Noto CJK 同时含拉丁）。
 - 若要换字体：
   1. 把 TTF/OTF 放到 `data/fonts-src/`；
   2. 重新运行 glyphore（或改 `build-fonts.sh`）；

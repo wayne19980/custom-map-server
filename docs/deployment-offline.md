@@ -113,7 +113,7 @@ config/           # manifest 与生成的 config
 | `docker compose` 仍尝试拉镜像 | 必须使用 `docker compose up -d --pull never`；不要执行 `docker compose pull` |
 | 页面空白 | 看 `docker compose logs tileserver`；确认 `data/tiles/*.pmtiles` 存在 |
 | 字体/图标 404 | 确认 `data/fonts`、`data/sprites` 随包拷贝；不要只拷 `data/tiles` |
-| 中文不显示 | 确认浏览器请求 `/fonts/Noto%20Sans%20CJK%20SC%20Regular/...` 返回 200 |
+| 中文不显示 | 确认浏览器请求 `/fonts/NotoSansSC-Regular/...` 返回 200 |
 | 编辑器 401 | 顶部令牌与 `.env` 的 `EDITOR_TOKEN` 不一致 |
 | 编辑器 403/500 | 确认 `styles/` 对 editor 可写、`styles/schema/layer-groups.json` 可读 |
 | 海面缺失 | 构建时使用了 `COASTLINE=none`；重新用带海岸线的构建产物替换 PMTiles |

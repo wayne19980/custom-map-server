@@ -227,6 +227,29 @@ for (const meta of manifest.styles) {
   }
   fs.writeFileSync(outPath, `${JSON.stringify(style, null, 2)}\n`);
 
+  // Raster/WMTS rendering uses TileServer GL's native renderer, which cannot
+  // resolve browser-relative URLs. Emit a sibling style with a pmtiles://
+  // source and a sprite path relative to TileServer GL's paths.sprites.
+  if (meta.render) {
+    const raster = JSON.parse(JSON.stringify(style));
+    raster.name = `${style.name} (raster)`;
+    // Native renderer prefixes these with fonts:// and sprites://; a leading
+    // slash would produce fonts:///fonts/... and an invalid font stack.
+    raster.glyphs = '{fontstack}/{range}.pbf';
+    raster.sprite = `${styleId}/sprite`;
+    raster.sources = {
+      basemap: {
+        type: 'vector',
+        url: `pmtiles://${meta.dataset}`,
+        attribution: dataset.attribution,
+      },
+    };
+    raster.metadata = { ...(raster.metadata || {}), 'map:rasterOf': styleId };
+    const rasterPath = path.join(root, 'styles', `${styleId}-raster.json`);
+    fs.writeFileSync(rasterPath, `${JSON.stringify(raster, null, 2)}\n`);
+    console.log(`build-styles: wrote ${path.relative(root, rasterPath)} (raster/WMTS variant)`);
+  }
+
   console.log(`build-styles: wrote ${path.relative(root, outPath)} (${style.layers.length} layers, font ${fonts.regular}${boldPattern.test(JSON.stringify(base.layers)) ? ' / ' + fonts.bold : ''})`);
 }
 

@@ -144,6 +144,38 @@ async function handle(req, res) {
     return send(res, 200, { ok: true, service: 'custom-map-editor-api', auth: Boolean(TOKEN) });
   }
 
+  if (pathname === '/api/catalog' && req.method === 'GET') {
+    const manifest = readManifest();
+    const datasets = Object.entries(manifest.datasets || {}).map(([id, dataset]) => ({
+      id,
+      label: dataset.label || id,
+      bounds: dataset.bounds,
+      center: dataset.center,
+      minzoom: dataset.minzoom,
+      maxzoom: dataset.maxzoom,
+      attribution: dataset.attribution,
+      vector: {
+        tiles: `/data/${id}/{z}/{x}/{y}.pbf`,
+        tilejson: `/data/${id}.json`,
+      },
+    }));
+    const styles = (manifest.styles || []).map((style) => ({
+      id: style.id,
+      label: style.label,
+      style: `/styles/${style.id}/style.json`,
+      raster: style.render ? `/styles/${style.id}_raster/{z}/{x}/{y}.png` : null,
+      wmts: style.render ? `/styles/${style.id}_raster/wmts.xml` : null,
+    }));
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    return send(res, 200, {
+      name: manifest.branding?.title || 'Custom Map Server',
+      license: 'ODbL 1.1',
+      attribution: manifest.branding?.attribution || '© OpenStreetMap contributors',
+      datasets,
+      styles,
+    });
+  }
+
   if (pathname === '/api/manifest' && req.method === 'GET') {
     return send(res, 200, readManifest());
   }

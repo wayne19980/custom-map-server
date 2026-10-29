@@ -30,6 +30,10 @@
     "blueprint": {
       "style": "blueprint.json",
       "serve_rendered": false
+    },
+    "blueprint_raster": {
+      "style": "blueprint-raster.json",
+      "serve_rendered": true
     }
   },
   "data": {

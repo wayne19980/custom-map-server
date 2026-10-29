@@ -26,6 +26,12 @@ for (const meta of manifest.styles) {
     style: `${meta.id}.json`,
     serve_rendered: false,
   };
+  if (meta.render) {
+    styles[`${meta.id}_raster`] = {
+      style: `${meta.id}-raster.json`,
+      serve_rendered: true,
+    };
+  }
 }
 
 const data = {};

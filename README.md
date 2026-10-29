@@ -149,6 +149,22 @@ cd dist && ./install.sh
 
 详见 [路线图](docs/roadmap.md) 与 [标准服务与引擎适配](docs/services.md)。
 
+## 标准服务
+
+- 矢量 XYZ：`/data/shanghai/{z}/{x}/{y}.pbf`
+- TileJSON：`/data/shanghai.json`
+- 样式：`/styles/blueprint/style.json`
+- 栅格 XYZ（已开启）：`/styles/blueprint_raster/{z}/{x}/{y}.png`
+- WMTS（已开启）：`/styles/blueprint_raster/wmts.xml`
+- 服务目录：`/api/catalog`
+
+```bash
+curl -o tile.png http://localhost:8081/styles/blueprint_raster/12/3430/1673.png
+curl http://localhost:8081/styles/blueprint_raster/wmts.xml
+```
+
+其他样式要开启栅格，在 `config/map.manifest.json` 加 `"render": true`，再 `./run styles config` 并重启 tileserver。Cesium/QGIS 可直接用栅格 XYZ/WMTS；Cesium 原生不渲染 MVT。详见 [标准服务与引擎适配](docs/services.md)。
+
 ## 生产注意事项
 
 - 设置 `.env` 里的 `PUBLIC_URL` 为客户端实际访问地址（含末尾 `/`），并在反向代理上配置 HTTPS。

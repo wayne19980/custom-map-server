@@ -30,15 +30,18 @@ check "style light" "$BASE_URL/styles/light/style.json"
 check "style dark" "$BASE_URL/styles/dark/style.json"
 check "style bright" "$BASE_URL/styles/bright/style.json"
 check "style blueprint" "$BASE_URL/styles/blueprint/style.json"
+check "raster blueprint" "$BASE_URL/styles/blueprint_raster/12/3430/1673.png"
+check "wmts blueprint" "$BASE_URL/styles/blueprint_raster/wmts.xml"
 check "tilejson" "$BASE_URL/data/shanghai.json"
 check "sprite light" "$BASE_URL/sprites/light/sprite.json"
 check "sprite light png" "$BASE_URL/sprites/light/sprite.png"
 check "sprite light @2x" "$BASE_URL/sprites/light/sprite@2x.json"
 check "sprite blueprint" "$BASE_URL/sprites/blueprint/sprite.json"
-check "font range" "$BASE_URL/fonts/Noto%20Sans%20CJK%20SC%20Regular/0-255.pbf"
+check "font range" "$BASE_URL/fonts/NotoSansSC-Regular/0-255.pbf"
 check "index" "$BASE_URL/"
 check "editor page" "$BASE_URL/editor"
 check "editor api" "$BASE_URL/api/health"
+check "catalog" "$BASE_URL/api/catalog"
 check "layer groups" "$BASE_URL/styles/schema/layer-groups.json"
 
 read -r TILE_X TILE_Y < <(node -e '
@@ -65,7 +68,7 @@ else
   FAIL=1
 fi
 
-FONT_BYTES="$(curl -fsS "$BASE_URL/fonts/Noto%20Sans%20CJK%20SC%20Regular/0-255.pbf" -o /dev/null -w '%{size_download}')"
+FONT_BYTES="$(curl -fsS "$BASE_URL/fonts/NotoSansSC-Regular/0-255.pbf" -o /dev/null -w '%{size_download}')"
 if [[ "${FONT_BYTES:-0}" -gt 0 ]]; then
   echo "verify: OK   font bytes readable ($FONT_BYTES bytes)"
 else

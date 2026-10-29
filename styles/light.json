@@ -349,7 +349,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Bold"
+          "NotoSansSC-Bold"
         ],
         "text-rotation-alignment": "map",
         "text-size": 12
@@ -1784,7 +1784,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-max-angle": 30,
         "text-pitch-alignment": "viewport",
@@ -1842,7 +1842,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-pitch-alignment": "viewport",
         "text-rotation-alignment": "viewport",
@@ -2074,7 +2074,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-justify": "center",
         "text-offset": [
@@ -2135,7 +2135,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-justify": "center",
         "text-offset": [
@@ -2197,7 +2197,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-justify": "left",
         "text-offset": [
@@ -2277,7 +2277,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-justify": "left",
         "text-offset": [
@@ -2376,7 +2376,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-justify": "left",
         "text-offset": [
@@ -2467,7 +2467,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-justify": "left",
         "text-offset": [
@@ -2566,7 +2566,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-justify": "left",
         "text-offset": [
@@ -2627,7 +2627,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-size": 10,
         "text-transform": "uppercase",
@@ -2684,7 +2684,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-size": [
           "interpolate",
@@ -2769,7 +2769,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-size": [
           "interpolate",
@@ -2855,7 +2855,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans CJK SC Regular"
+          "NotoSansSC-Regular"
         ],
         "text-size": [
           "interpolate",
